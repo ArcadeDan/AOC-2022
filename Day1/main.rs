@@ -18,7 +18,7 @@ fn main() -> std::io::Result<()> {
 
     for line in reader.lines() {
         if line.as_ref().ok().unwrap() == "" {
-            println!("{}", groupsum);
+            //println!("{}", groupsum);
             elfgroup.push(groupsum.clone());
             groupsum = 0;
         }
@@ -28,6 +28,11 @@ fn main() -> std::io::Result<()> {
         }
     }
     
-    println!("{:?}", elfgroup.iter().enumerate().max());
+    println!("{:?}", elfgroup.iter().enumerate().max()); // part 1
+    elfgroup.sort();
+    elfgroup.reverse();
+    
+    println!("{}", elfgroup[0] + elfgroup[1] + elfgroup[2]); // part 2
+
     Ok(())
 }
