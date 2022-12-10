@@ -1,8 +1,9 @@
 use std::{
     cmp::Ordering,
+    collections::HashSet,
     fs::File,
-    io::{BufRead, BufReader, stdin},
-    str::FromStr, collections::HashSet,
+    io::{stdin, BufRead, BufReader},
+    str::FromStr,
 };
 
 use anyhow::Ok;
@@ -126,11 +127,11 @@ fn main() -> Result<()> {
     //let reader = BufReader::new(file);
     let mut rope = Rope::new(1);
     let mut biggerrope = Rope::new(9);
-    let mut set = HashSet::from([Point {x: 0, y: 0}]);
+    let mut set = HashSet::from([Point { x: 0, y: 0 }]);
     let mut bigger_set: HashSet<Point> = HashSet::from([Point { x: 0, y: 0 }]);
 
     for move_cmd in read(BufReader::new(stdin())) {
-        let Move(direction, step, ) = move_cmd?;
+        let Move(direction, step) = move_cmd?;
         (0..step).for_each(|_| {
             rope.step(&direction);
             rope.final_tail().into_iter().for_each(|tail| {
@@ -140,7 +141,7 @@ fn main() -> Result<()> {
             biggerrope.step(&direction);
             biggerrope.final_tail().into_iter().for_each(|tail| {
                 bigger_set.insert(tail);
-            }) 
+            })
         })
     }
     println!("Rope 1: {}", set.len());
